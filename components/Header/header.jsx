@@ -65,7 +65,7 @@ export default function header() {
     setIsUserMinting(true);
 
     metaplex.use(walletAdapterIdentity(wallet.adapter));
-    const nft = await mint(metaplex, candyMachine, "APE");
+    const nft = await mint(metaplex, candyMachine, "ARV");
 
     if (nft) {
       setNft(nft);
