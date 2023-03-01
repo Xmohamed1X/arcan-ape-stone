@@ -65,7 +65,7 @@ export default function header() {
     setIsUserMinting(true);
 
     metaplex.use(walletAdapterIdentity(wallet.adapter));
-    const nft = await mint(metaplex, candyMachine, "ARV");
+    const nft = await mint(metaplex, candyMachine, "APE");
 
     if (nft) {
       setNft(nft);
@@ -146,7 +146,7 @@ export default function header() {
             <div
               onClick={async () => await mintButtonClicked()}
               disabled={isUserMinting || candyMachine?.itemsRemaining === 0}
-              className="w-full img cursor-pointer hover:scale-105 transition-all mt-8 sm:mt-28 md:mt-6 py-2 fontboh text-center rounded-xl bg-[#fe7200]"
+              className="w-full img cursor-pointer hover:scale-105 transition-all mt-8 xs:mt-28 md:mt-6 py-2 fontboh text-center rounded-xl bg-[#fe7200]"
             >
               <p className="text-lg">{getMintButtonContent()}</p>
               <p className="text-xl -mt-[1px] font-semibold">
