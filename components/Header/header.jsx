@@ -10,14 +10,21 @@ import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { SolanaMobileWalletAdapterWalletName } from "@solana-mobile/wallet-adapter-mobile";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
-import { CandyMachineState, getCandyMachineState, mint, NFT, getNftPrice } from "../candy/candy-machine";
-
+import {
+  CandyMachineState,
+  getCandyMachineState,
+  mint,
+  NFT,
+  getNftPrice,
+} from "../candy/candy-machine";
 
 export default function header() {
-
-  const candyMachineId = "2bE9xVB9YPmhB7Kc6VviL6DR3FEzf2fKc2bXUJBqMovh"
-  const connection = new Connection("https://neat-still-vineyard.solana-mainnet.quiknode.pro/0799322a528958e6c600e7ecb87c49c99e6e6105/")
-  const rpcHost = "https://neat-still-vineyard.solana-mainnet.quiknode.pro/0799322a528958e6c600e7ecb87c49c99e6e6105/"
+  const candyMachineId = "2bE9xVB9YPmhB7Kc6VviL6DR3FEzf2fKc2bXUJBqMovh";
+  const connection = new Connection(
+    "https://neat-still-vineyard.solana-mainnet.quiknode.pro/0799322a528958e6c600e7ecb87c49c99e6e6105/"
+  );
+  const rpcHost =
+    "https://neat-still-vineyard.solana-mainnet.quiknode.pro/0799322a528958e6c600e7ecb87c49c99e6e6105/";
 
   const anchorWallet = useAnchorWallet();
   const { connect, connected, publicKey, wallet } = useWallet();
@@ -25,20 +32,20 @@ export default function header() {
   const [nft, setNft] = useState();
   const [isUserMinting, setIsUserMinting] = useState(false);
   const [error, setError] = useState("");
-  
+
   const metaplex = new Metaplex(connection);
 
-  const refreshCandyMachineState = useCallback(
-    async () => {
-      if (!publicKey) {
-        return;
-      }
+  const refreshCandyMachineState = useCallback(async () => {
+    if (!publicKey) {
+      return;
+    }
 
-      const candyMachine = await getCandyMachineState(metaplex, new PublicKey(candyMachineId));
-      setCandyMachine(candyMachine);
-    },
-    [anchorWallet]
-  );
+    const candyMachine = await getCandyMachineState(
+      metaplex,
+      new PublicKey(candyMachineId)
+    );
+    setCandyMachine(candyMachine);
+  }, [anchorWallet]);
 
   const getMintButtonContent = () => {
     if (!candyMachine) {
@@ -60,24 +67,19 @@ export default function header() {
     metaplex.use(walletAdapterIdentity(wallet.adapter));
     const nft = await mint(metaplex, candyMachine, "APE");
 
-    if (nft) { 
+    if (nft) {
       setNft(nft);
     } else {
       setError("Minting unsuccessful!");
     }
-    
+
     setIsUserMinting(false);
     refreshCandyMachineState();
-  }
+  };
 
   useEffect(() => {
     refreshCandyMachineState();
-  }, [
-    anchorWallet,
-    candyMachineId,
-    connection,
-    refreshCandyMachineState,
-  ]);
+  }, [anchorWallet, candyMachineId, connection, refreshCandyMachineState]);
 
   useEffect(() => {
     (function loop() {
@@ -87,8 +89,6 @@ export default function header() {
       }, 20000);
     })();
   }, [refreshCandyMachineState]);
-
-
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [
@@ -144,12 +144,11 @@ export default function header() {
               ))}
             </div>
             <div
-              onClick={async () => await mintButtonClicked()} disabled={isUserMinting || candyMachine?.itemsRemaining === 0} 
-            className="w-full img cursor-pointer hover:scale-105 transition-all mt-6 py-2 fontboh text-center rounded-xl bg-[#fe7200]">
-              <p
-              className="text-lg">{
-              getMintButtonContent()
-              }</p>
+              onClick={async () => await mintButtonClicked()}
+              disabled={isUserMinting || candyMachine?.itemsRemaining === 0}
+              className="w-full img cursor-pointer hover:scale-105 transition-all mt-8 sm:mt-28 md:mt-6 py-2 fontboh text-center rounded-xl bg-[#fe7200]"
+            >
+              <p className="text-lg">{getMintButtonContent()}</p>
               <p className="text-xl -mt-[1px] font-semibold">
                 Arcane Stoned Ape
               </p>
@@ -164,7 +163,12 @@ export default function header() {
               <div className="text-center border-b pb-5 sm:pb-0 border-white/60 sm:border-transparent">
                 <div className="text-2xl text-white">Supply</div>
                 <div className="text-3xl mt-1 font-semibold">
-                  <span> {`${candyMachine ? candyMachine.itemsRemaining : "Loading.."}`}</span>
+                  <span>
+                    {" "}
+                    {`${
+                      candyMachine ? candyMachine.itemsRemaining : "Loading.."
+                    }`}
+                  </span>
                   <span className="mx-3">/</span>
                   <span>555</span>
                 </div>
