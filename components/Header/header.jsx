@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import sac5 from "../../public/SAC5.png";
 import sac6 from "../../public/SAC6.png";
