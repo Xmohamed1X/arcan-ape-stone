@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import sac5 from "../../public/SAC5.png";
 import sac6 from "../../public/SAC6.png";
@@ -90,58 +89,46 @@ export default function header() {
     })();
   }, [refreshCandyMachineState]);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [
-    {
-      filename:
-        "https://media.discordapp.net/attachments/1060970855519244310/1066453443880947772/Type1.png?width=363&height=362",
-    },
-    {
-      filename:
-        "https://media.discordapp.net/attachments/1060970855519244310/1078165759487901746/SAC5.png?width=489&height=489",
-    },
-    {
-      filename:
-        "https://media.discordapp.net/attachments/1060970855519244310/1066453443880947772/Type1.png?width=363&height=362",
-    },
-    {
-      filename:
-        "https://media.discordapp.net/attachments/1060970855519244310/1078167260520251544/SAC6.png?width=488&height=485",
-    },
-  ];
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 800);
-    return () => clearInterval(intervalId);
-  }, [images.length]);
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // const images = [
+  //   {
+  //     filename:
+  //       "https://media.discordapp.net/attachments/1060970855519244310/1066453443880947772/Type1.png?width=363&height=362",
+  //   },
+  //   {
+  //     filename:
+  //       "https://media.discordapp.net/attachments/1060970855519244310/1078165759487901746/SAC5.png?width=489&height=489",
+  //   },
+  //   {
+  //     filename:
+  //       "https://media.discordapp.net/attachments/1060970855519244310/1066453443880947772/Type1.png?width=363&height=362",
+  //   },
+  //   {
+  //     filename:
+  //       "https://media.discordapp.net/attachments/1060970855519244310/1078167260520251544/SAC6.png?width=488&height=485",
+  //   },
+  // ];
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  //   }, 800);
+  //   return () => clearInterval(intervalId);
+  // }, [images.length]);
 
   return (
     <div>
       <div className="w-full mt-[10vh] grid place-items-center">
         <div className="container px-10 flex-col lg:flex-row flex justify-evenly items-center">
           <div className="p1 w-[95%] mx-auto md:w-[350px]">
-            <div
-              className="sm:w-[360px] sm:h-[360px] w-full min-h-[296px] mx-auto"
-              style={{ position: "relative" }}
-            >
-              {images.map((image, index) => (
-                <Image
-                  className="rounded-xl"
-                  key={index}
-                  src={`${image.filename}`}
-                  alt={image.alt}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    opacity: index === currentImageIndex ? 1 : 0,
-                    transition: "opacity 1s ease-in-out",
-                  }}
-                  width={500}
-                  height={500}
-                />
-              ))}
+            <div className="sm:w-[360px] sm:h-[360px] w-full min-h-[296px] mx-auto">
+              <Image
+                className="rounded-xl"
+                src={
+                  "https://cdn.discordapp.com/attachments/984481399107113001/1080720645756813322/GIF_for_Website.gif"
+                }
+                width={500}
+                height={500}
+              />
             </div>
             <div
               onClick={async () => await mintButtonClicked()}
