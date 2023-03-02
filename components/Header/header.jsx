@@ -17,15 +17,14 @@ import {
   NFT,
   getNftPrice,
 } from "../candy/candy-machine";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function header() {
   const candyMachineId = "2bE9xVB9YPmhB7Kc6VviL6DR3FEzf2fKc2bXUJBqMovh";
   const connection = new Connection(
     "https://neat-still-vineyard.solana-mainnet.quiknode.pro/0799322a528958e6c600e7ecb87c49c99e6e6105/"
   );
-  const rpcHost =
-    "https://neat-still-vineyard.solana-mainnet.quiknode.pro/0799322a528958e6c600e7ecb87c49c99e6e6105/";
-
   const anchorWallet = useAnchorWallet();
   const { connect, connected, publicKey, wallet } = useWallet();
   const [candyMachine, setCandyMachine] = useState();
@@ -62,19 +61,26 @@ export default function header() {
   };
 
   const mintButtonClicked = async () => {
-    setIsUserMinting(true);
+    try {
 
-    metaplex.use(walletAdapterIdentity(wallet.adapter));
-    const nft = await mint(metaplex, candyMachine, "ARV");
+      setIsUserMinting(true);
+      
+      metaplex.use(walletAdapterIdentity(wallet.adapter));
+      const nft = await mint(metaplex, candyMachine, "ARV");
+      
+      if (nft) {
+        setNft(nft);
+      } else {
+        // notify_error("transaction failed");
+        setError("Minting unsuccessful!");
+      }
 
-    if (nft) {
-      setNft(nft);
-    } else {
-      setError("Minting unsuccessful!");
+      notify_success("transaction successful");
+      setIsUserMinting(false);
+      refreshCandyMachineState();
+    }catch(e) {
+      notify_error("transaction failed");
     }
-
-    setIsUserMinting(false);
-    refreshCandyMachineState();
   };
 
   useEffect(() => {
@@ -89,6 +95,24 @@ export default function header() {
       }, 20000);
     })();
   }, [refreshCandyMachineState]);
+
+  const notify_success = (msg) => {
+    toast.success(msg, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+  const notify_warning = (msg) => {
+    toast.warning(msg, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+  const notify_error = (msg) => {
+    toast.error(msg, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+
 
   // const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // const images = [
@@ -120,6 +144,7 @@ export default function header() {
   return (
     <div>
       <div className="w-full mt-[10vh] grid place-items-center">
+        <ToastContainer theme="dark" />
         <div className="container px-10 flex-col lg:flex-row flex justify-evenly items-center">
           <div className="p1 w-[95%] mx-auto md:w-[350px]">
             <div className="sm:w-[360px] sm:h-[360px] w-full min-h-[296px] mx-auto">
