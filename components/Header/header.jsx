@@ -75,7 +75,6 @@ export default function header() {
         setError("Minting unsuccessful!");
       }
 
-      notify_success("transaction successful");
       setIsUserMinting(false);
       refreshCandyMachineState();
     }catch(e) {
