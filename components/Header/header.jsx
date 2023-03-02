@@ -112,6 +112,7 @@ export default function header() {
   //   const intervalId = setInterval(() => {
   //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   //   }, 800);
+
   //   return () => clearInterval(intervalId);
   // }, [images.length]);
 
